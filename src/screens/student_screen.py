@@ -22,8 +22,8 @@ def student_dashboard():
         if st.button("Log Out",key="loginbackbtn",shortcut="control+backspace"):
             st.session_state['is_logged_in']=False
             del st.session_state.student_data
-
-    st.rerun()
+            st.rerun()
+            return
 
     st.space()
     c1,c2=st.columns(2)
