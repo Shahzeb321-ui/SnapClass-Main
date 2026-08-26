@@ -47,7 +47,7 @@ def create_student(
     voice_embedding = legacy_embeddings.get("voice_embeddings", voice_embedding)
     data = {
         'name': new_name,
-        'face_embeddings': face_embedding,
+            'face_embeddings': face_embedding,
         'voice_embedding': voice_embedding
     }
     response = supabase.table('students').insert(data).execute()
