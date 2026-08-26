@@ -60,19 +60,21 @@ def create_subject(subject_code, name, section, teacher_id):
     return response.data
 
 def get_teacher_subjects(teacher_id):
-    response = supabase.table('subjects').select("*, subjects_student(count), attendence_log(timestamps)").eq("teacher_id", teacher_id).execute()
+    response = supabase.table('subjects').select("*").eq("teacher_id", teacher_id).execute()
     subjects = response.data
 
 
     for sub in subjects:
-        sub['total_students'] = sub.get("subjects_student", [{}])[0].get('count', 0) if sub.get('subjects_student') else 0
-        attendance = sub.get('attendence_log', [])
-        unique_sessions = len(set(log['timestamps'] for log in attendance))
+        enrollment_response = supabase.table('subjects_student').select('student_id').eq(
+            'subject_id', sub['subject_id']
+        ).execute()
+        sub['total_students'] = len(enrollment_response.data or [])
+
+        attendance_response = supabase.table('attendence_log').select('timestamp').eq(
+            'subject_id', sub['subject_id']
+        ).execute()
+        unique_sessions = len(set(log['timestamp'] for log in (attendance_response.data or []) if log.get('timestamp')))
         sub['total_classes'] = unique_sessions
-
-
-        sub.pop('subjects_student', None)
-        sub.pop('attendence_log', None)
 
     return subjects
 
