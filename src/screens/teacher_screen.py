@@ -11,7 +11,7 @@ from src.components.dialog_voice_attendance import voice_attendance_dialog
 from src.database.db import check_teacher_exists,create_teacher,teacher_login,get_teacher_subjects,get_attendance_for_teacher
 import numpy as np
 from datetime import datetime
-from src.pipelines.face_pipeline import predict_attendence
+from src.pipelines.face_pipeline import predict_attendance
 from src.database.config import supabase
 import pandas as pd
 
@@ -80,7 +80,7 @@ def teacher_tab_take_attendence():
     teacher_id=st.session_state.teacher_data['teacher_id']
     st.header('Take Ai Attendence')
 
-    if 'attendance_image' not in st.session_state:
+    if 'attendance_images' not in st.session_state:
         st.session_state.attendance_images = []
 
     subjects=get_teacher_subjects(teacher_id)
@@ -128,7 +128,7 @@ def teacher_tab_take_attendence():
                 for idx,img in enumerate(st.session_state.attendance_images):
                     img_np =np.array(img.convert('RGB'))
 
-                    detected,_,_ = predict_attendence(img_np)
+                    detected,_,_ = predict_attendance(img_np)
 
                     if detected:
                         for sid in detected.keys():

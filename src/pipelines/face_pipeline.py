@@ -14,7 +14,7 @@ def load_dlib_models():
         face_recognition_models.pose_predictor_model_location()
     )
 
-    facerec=dlib.face_recogination_model_v1(
+    facerec=dlib.face_recognition_model_v1(
         face_recognition_models.face_recognition_model_location()
     )
 
@@ -28,7 +28,7 @@ def get_face_embeddings(image_np):
 
     for face in faces:
         shape=sp(image_np,face)
-        face_descriptor=facerec.compute_face_description(image_np,shape,1)
+        face_descriptor=facerec.compute_face_descriptor(image_np,shape,1)
         encoding.append(np.array(face_descriptor))
 
     return encoding
@@ -77,7 +77,7 @@ def predict_attendance(class_image_np):
     
     clf = model_data['clf']
     X_train = model_data['X']
-    y_train = model_data['y']
+    y_train = model_data['Y']
 
     all_students = sorted(list(set(y_train)))
 
