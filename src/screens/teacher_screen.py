@@ -163,7 +163,7 @@ def teacher_tab_take_attendence():
                         attendance_to_log.append({
                             'student_id': student['student_id'],
                             'subject_id': selected_subjects_id,
-                            'timestamp': current_timestamp,
+                            'timestamps': current_timestamp,
                             'is_present': bool(is_present)
                         })
                         attendance_result_dialog(pd.DataFrame(results),attendance_to_log)
@@ -224,7 +224,7 @@ def teacher_tab_attendence_records():
     data = []
 
     for r in records:
-        ts=r.get('timestamp')
+        ts=r.get('timestamps') or r.get('timestamp')
 
         data.append({
             "ts_group": ts.split(".")[0] if ts else None,

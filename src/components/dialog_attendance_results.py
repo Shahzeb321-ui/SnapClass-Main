@@ -19,7 +19,7 @@ def attendance_result_dialog(df,logs):
             st.rerun()
     
     with col2:
-        if st.button('Confirm and Save', width='primary'):
+        if st.button('Confirm and Save', type='primary', width='stretch'):
             try:
                 create_attendance(logs)
                 st.toast("Attendance taken")
@@ -27,7 +27,7 @@ def attendance_result_dialog(df,logs):
                 st.session_state.voice_attendance_results=None
                 st.rerun()
             except Exception as e:
-                st.error('Sync Failed')
+                st.error(f'Sync Failed: {e}')
 
 def show_attendance_result(df_results, logs):
     attendance_result_dialog(df_results,logs)
