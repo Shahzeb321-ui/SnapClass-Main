@@ -162,13 +162,13 @@ def student_screen():
                             if audio_data:
                                 voice_emb=get_voice_embeddings(audio_data.read())
 
-                            response_data=create_student(new_name,face_embeddings=face_emb,voice_embeddings=voice_emb)
+                            response_data=create_student(new_name,face_embedding=face_emb,voice_embedding=voice_emb)
 
                             if response_data:
                                 train_classifier()
                                 st.session_state.is_logged_in =True
                                 st.session_state.user_role= 'student'
-                                st.session_state.student_data=student
+                                st.session_state.student_data=response_data[0]
                                 st.toast(f'Profile Created! Hi {new_name}')
                                 time.sleep(2)
                                 st.rerun()

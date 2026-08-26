@@ -37,8 +37,19 @@ def get_all_students():
     response = supabase.table('students').select("*").execute()
     return response.data
 
-def create_student(new_name, face_embedding=None, voice_embedding=None):
-    data = {'name': new_name, 'face_embeddings':face_embedding, "voice_embedding": voice_embedding}
+def create_student(
+    new_name,
+    face_embedding=None,
+    voice_embedding=None,
+    **legacy_embeddings,
+):
+    face_embedding = legacy_embeddings.get("face_embeddings", face_embedding)
+    voice_embedding = legacy_embeddings.get("voice_embeddings", voice_embedding)
+    data = {
+        'name': new_name,
+        'face_embedding': face_embedding,
+        'voice_embedding': voice_embedding,
+    }
     response = supabase.table('students').insert(data).execute()
     return response.data
 
