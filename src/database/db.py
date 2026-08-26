@@ -70,15 +70,7 @@ def get_teacher_subjects(teacher_id):
         ).execute()
         sub['total_students'] = len(enrollment_response.data or [])
 
-        attendance_response = supabase.table('attendence_log').select('*').eq(
-            'subject_id', sub['subject_id']
-        ).execute()
-        session_timestamps = {
-            log.get('timestamp') or log.get('timestamps')
-            for log in (attendance_response.data or [])
-        }
-        unique_sessions = len(session_timestamps - {None})
-        sub['total_classes'] = unique_sessions
+        sub['total_classes'] = 0
 
     return subjects
 
