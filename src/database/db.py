@@ -38,7 +38,7 @@ def get_all_students():
     return response.data
 
 def create_student(new_name, face_embedding=None, voice_embedding=None):
-    data = {'name': new_name, 'face_embedding':face_embedding, "voice_embedding": voice_embedding}
+    data = {'name': new_name, 'face_embeddings':face_embedding, "voice_embedding": voice_embedding}
     response = supabase.table('students').insert(data).execute()
     return response.data
 
