@@ -78,15 +78,15 @@ def get_teacher_subjects(teacher_id):
 
 def enroll_student_to_subject(student_id,subject_id):
     data={'student_id':student_id,'subject_id':subject_id}
-    response=supabase.table('subject_students').insert(data).execute()
+    response=supabase.table('subjects_student').insert(data).execute()
     return response.data
 
 def unenroll_student_to_subject(student_id,subject_id):
-    response=supabase.table('subject_students').delete().eq('student_id',student_id).eq("subject_id",subject_id).execute()
+    response=supabase.table('subjects_student').delete().eq('student_id',student_id).eq("subject_id",subject_id).execute()
     return response.data
 
 def get_student_subjects(student_id):
-    response = supabase.table('subject_students').select('*, subjects(*)').eq('student_id', student_id).execute()
+    response = supabase.table('subjects_student').select('*, subjects(*)').eq('student_id', student_id).execute()
     return response.data
 
 
